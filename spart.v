@@ -33,20 +33,40 @@ module spart(
 // Internal Registers
 reg [7:0] r_buffer;  // Receive buffer
 reg [7:0] t_buffer;  // Transmit buffer
-reg [15:0] baud_div; // Baud rate divisor
-reg [3:0] baud_counter;
+reg [15:0] baud_counter;
 
 //Output register to be used in always blocks before assignment to actual output signals
 reg rda_ff;
 reg tbr_ff;
 reg txd_ff;
+reg [3:0] bit_counter;
+reg receiving, transmitting;
+
+//division buffer
+reg [15:0] db;
+
+always @(posedge clk or negedge rst) begin
+    if (!rst) begin
+	db <= 16'b0;
+    end
+    else begin
+	if (ioaddr == 2'b10 && !iorw && iocs) begin
+		db[7:0] = databus;
+	end else if (ioaddr == 2'b11 && !iorw && iocs)begin
+		db[15:8] = databus;
+	end
+    end
+end
+	
+
+
 
 // Baud Rate Generator - need to add additional branches based on ioaddr - not exactly sure yet how specifically
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
         baud_counter <= 0;
     end else begin
-        if (baud_counter == baud_div[3:0]) begin
+        if (baud_counter == db || (ioaddr == 2'b0 && !iorw && iocs)) begin
             baud_counter <= 0;
         end else begin
             baud_counter <= baud_counter + 1;
@@ -54,31 +74,55 @@ always @(posedge clk or negedge rst) begin
     end
 end
 
-// Receive Logic
+// Receive Logic with Start and Stop Bit Handling
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
         rda_ff <= 0;
         r_buffer <= 8'b0;
-    end else if (baud_counter == 0 && rxd) begin
-        r_buffer <= {r_buffer[6:0], rxd};
-        rda_ff <= 1;
+        bit_counter <= 0;
+        receiving <= 0;
+    end else if (!receiving && rxd == 0) begin // Detect start bit
+        receiving <= 1;
+        bit_counter <= 0;
+    end else if (receiving && baud_counter == 0) begin
+        if (bit_counter < 8) begin
+            r_buffer <= {rxd, r_buffer[7:1]};
+            bit_counter <= bit_counter + 1;
+        end else if (bit_counter == 8) begin // Stop bit
+            if (rxd == 1) begin
+                rda_ff <= 1;
+            end
+            receiving <= 0;
+        end
     end
 end
 
-// Transmit Logic
+// Transmit Logic with Start and Stop Bit Handling
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
         tbr_ff <= 1;
         txd_ff <= 1;
-    end else if (!iorw && ioaddr == 2'b00 && iocs) begin
+        bit_counter <= 0;
+        transmitting <= 0;
+    end else if (!transmitting && !iorw && ioaddr == 2'b00 && iocs) begin
         t_buffer <= databus;
         tbr_ff <= 0;
-    end else if (baud_counter == 0 && !tbr_ff) begin
-        txd_ff <= t_buffer[0];
-        t_buffer <= {1'b1, t_buffer[7:1]};
-        if (t_buffer == 8'b00000001) tbr_ff <= 1;
+        transmitting <= 1;
+        bit_counter <= 0;
+        txd_ff <= 0; // Start bit
+    end else if (transmitting && baud_counter == 0) begin
+        if (bit_counter < 8) begin
+            txd_ff <= t_buffer[0];
+            t_buffer <= {1'b1, t_buffer[7:1]};
+            bit_counter <= bit_counter + 1;
+        end else if (bit_counter == 8) begin // Stop bit
+            txd_ff <= 1;
+            tbr_ff <= 1;
+            transmitting <= 0;
+        end
     end
 end
+
 
 // Bus Interface
 //In english - (
