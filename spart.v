@@ -41,7 +41,7 @@ reg rda_ff;
 reg tbr_ff;
 reg txd_ff;
 
-// Baud Rate Generator
+// Baud Rate Generator - need to add additional branches based on ioaddr - not exactly sure yet how specifically
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
         baud_counter <= 0;
