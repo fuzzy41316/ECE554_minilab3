@@ -90,6 +90,8 @@ end
 //else
 //	set databus to 8'hz -> high impedence
 assign databus = (!iorw && iocs) ? ((ioaddr == 2'b01) ? {6'b0, rda_ff, tbr_ff} : r_buffer) : 8'bz;
+
+//assigning internal logic to output ports
 assign rda = rda_ff;
 assign tbr = tbr_ff;
 assign txd = txd_ff;
