@@ -41,7 +41,7 @@ module driver(
 
     /* Internal Wires */
     logic next_byte;
-    reg [1:0] baud_byte_cnt;
+    reg baud_byte_cnt;
     reg br_cfg_ff;
     logic new_br_cfg;
 
@@ -103,6 +103,7 @@ module driver(
                     next_state = TRANSMITTING;
             end
             PROGRAMMING: begin
+                iocs = 1;
                 if (br_cfg_ff !== br_cfg) 
                     new_br_cfg = 1;
                 else begin
@@ -123,10 +124,6 @@ module driver(
                                     (br_cfg == 2'b10) ? 8'h00 :
                                     (br_cfg == 2'b11) ? 8'h00 : 8'hZZ;
                         ioaddr      = 2'b11; // Address for DB High
-                        next_byte   = 1;
-                    end
-                    else begin
-                        // After both bytes are sent, return to the IDLE state.
                         next_state = IDLE;
                         new_br_cfg = 1;
                     end
