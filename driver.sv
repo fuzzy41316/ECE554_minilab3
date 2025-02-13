@@ -41,7 +41,7 @@ module driver(
 
     /* Internal Wires */
     logic next_byte;
-    reg baud_byte_cnt;
+    reg [1:0] baud_byte_cnt;
     reg br_cfg_ff;
     logic new_br_cfg;
 
@@ -51,7 +51,7 @@ module driver(
 
     always_ff@(posedge clk, negedge rst) begin
         if (!rst) 
-            state <= IDLE;
+            state <= IDLE;   // On reset, program the baud counter
         else
             state <= next_state;
     end
@@ -90,58 +90,61 @@ module driver(
         case(state)
             IDLE: begin
                 // On reset, program the baud counter
-                if(!rst) 
+                if (!rst) begin
                     next_state = PROGRAMMING;
-                // On a new baud rate configuration, program the baud counter
-                else if (br_cfg_ff !== br_cfg) begin
+                end
+                else if (br_cfg_ff !== br_cfg) begin 
                     new_br_cfg = 1;
                     next_state = PROGRAMMING;
                 end
-                // Depending on input from the SPART, transmitt/receive to/from the SPART
                 else if (rda)
                     next_state = RECEIVING;
                 else if (tbr)
                     next_state = TRANSMITTING;
             end
             PROGRAMMING: begin
-                // Check for a random change in baud rate
-                if (br_cfg_ff !== br_cfg) begin
+                if (br_cfg_ff !== br_cfg) 
                     new_br_cfg = 1;
-                end
-                // Otherwise continue sending the previous or new baud rate programming
                 else begin
-                    databus_reg = (baud_byte_cnt == 0) ? 
-                        ((br_cfg == 0) ? 8'h8a :
-                        (br_cfg == 1) ? 8'h45 :
-                        (br_cfg == 2) ? 8'ha2 :
-                        (br_cfg == 3) ? 8'h50 : 'Z) :
-                        (baud_byte_cnt == 1) ? 
-                        ((br_cfg == 0) ? 8'h02 :
-                        (br_cfg == 1) ? 8'h01 :
-                        (br_cfg == 2) ? 8'h00 :
-                        (br_cfg == 3) ? 8'h00 : 'Z) :
-                        'Z; // Unused
-
-                    // Determine if we need to send the next byte or done programming
-                    next_byte = 1;
-                    case (baud_byte_cnt)
-                        0: ioaddr = 2'b10;
-                        1: ioaddr = 2'b11;
-                        default: next_state = IDLE;
-                    endcase
+                    // Send programming bytes sequentially:
+                    if (baud_byte_cnt == 0) begin
+                        // Send the low byte into the Divisor Buffer (DB Low).
+                        databus_reg = (br_cfg == 2'b00) ? 8'h8A :
+                                    (br_cfg == 2'b01) ? 8'h45 :
+                                    (br_cfg == 2'b10) ? 8'hA2 :
+                                    (br_cfg == 2'b11) ? 8'h50 : 8'hZZ;
+                        ioaddr      = 2'b10; // Address for DB Low
+                        next_byte   = 1;
+                    end
+                    else if (baud_byte_cnt == 1) begin
+                        // Send the high byte into the Divisor Buffer (DB High).
+                        databus_reg = (br_cfg == 2'b00) ? 8'h02 :
+                                    (br_cfg == 2'b01) ? 8'h01 :
+                                    (br_cfg == 2'b10) ? 8'h00 :
+                                    (br_cfg == 2'b11) ? 8'h00 : 8'hZZ;
+                        ioaddr      = 2'b11; // Address for DB High
+                        next_byte   = 1;
+                    end
+                    else begin
+                        // After both bytes are sent, return to the IDLE state.
+                        next_state = IDLE;
+                        new_br_cfg = 1;
+                    end
                 end
             end
             RECEIVING: begin
-                ioaddr = 2'b00;
-                iocs = 1;
-                iorw = 1;
+                // Read operation: set up for receiving data from SPART.
+                ioaddr = 2'b00; // Assume this is the address for the receive register.
+                iocs   = 1;
+                iorw   = 1;    // Read operation (SPART -> driver)
                 if (!rda)
                     next_state = IDLE;
             end
             TRANSMITTING: begin
-                ioaddr = 2'b01;
-                iocs = 1;
-                iorw = 0;
+                // Write operation: set up for transmitting data to SPART.
+                ioaddr = 2'b01; // Assume this is the address for the transmit buffer.
+                iocs   = 1;
+                iorw   = 0;    // Write operation (driver -> SPART)
                 if (!tbr)
                     next_state = IDLE;
             end
