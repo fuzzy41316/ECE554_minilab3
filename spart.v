@@ -42,6 +42,7 @@ reg txd_ff;
 reg [3:0] bit_counter;
 reg [3:0] bit_counter_t;
 reg receiving, transmitting;
+reg bit_count;
 
 //division buffer
 reg [15:0] db;
@@ -66,9 +67,11 @@ end
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
         baud_counter <= 0;
+	bit_count <= 0;
     end else begin
         if (baud_counter == db || (ioaddr == 2'b00 && !iorw && iocs)) begin
             baud_counter <= 0;
+	    bit_count <=1;
         end else begin
             baud_counter <= baud_counter + 1;
         end
@@ -86,7 +89,7 @@ always @(posedge clk or negedge rst) begin
         receiving <= 1;
         bit_counter <= 0;
     end else if (receiving && baud_counter == 0) begin
-        if (bit_counter < 8) begin
+        if (bit_count) begin
             r_buffer <= {rxd, r_buffer[7:1]};
             bit_counter <= bit_counter + 1;
         end else if (bit_counter == 8) begin // Stop bit
@@ -112,7 +115,7 @@ always @(posedge clk or negedge rst) begin
         bit_counter_t <= 4'h0;
         txd_ff <= 0; // Start bit
     end else if (transmitting && baud_counter == 0) begin
-        if (bit_counter_t < 8) begin
+        if (bit_count) begin
             txd_ff <= t_buffer[0];
             t_buffer <= {1'b1, t_buffer[7:1]};
             bit_counter_t <= bit_counter_t + 1;
@@ -134,7 +137,7 @@ end
 //		set databus to r_buffer
 //else
 //	set databus to 8'hz -> high impedence
-assign databus = (!iorw && iocs) ? ((ioaddr == 2'b01) ? {6'b0, rda_ff, tbr_ff} : r_buffer) : 8'bz;
+assign databus = (iorw && iocs) ? ((ioaddr == 2'b01) ? {6'b0, rda_ff, tbr_ff} : r_buffer) : 8'bz;
 
 //assigning internal logic to output ports
 assign rda = rda_ff;
