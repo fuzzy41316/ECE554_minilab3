@@ -97,6 +97,7 @@ always @(posedge clk or negedge rst) begin
                 rda_ff <= 1;
             end
             receiving <= 0;
+	    bit_counter <= 0;
         end
     end
 end
@@ -122,6 +123,7 @@ always @(posedge clk or negedge rst) begin
         end else if (bit_counter_t == 8) begin // Stop bit
             txd_ff <= 1;
             tbr_ff <= 1;
+	    bit_counter <= 0;
             transmitting <= 0;
         end
     end
