@@ -103,6 +103,7 @@ module driver(
                     next_state = TRANSMITTING;
             end
             PROGRAMMING: begin
+                iocs = 1;
                 // Send programming bytes sequentially:
                 if (baud_byte_cnt == 0) begin
                     // Send the low byte into the Divisor Buffer (DB Low).
