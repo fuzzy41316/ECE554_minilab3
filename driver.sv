@@ -51,7 +51,7 @@ module driver(
 
     always_ff@(posedge clk, negedge rst) begin
         if (!rst) 
-            state <= IDLE;   // On reset, program the baud counter
+            state <= PROGRAMMING;   // On reset, program the baud counter
         else
             state <= next_state;
     end

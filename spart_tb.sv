@@ -18,7 +18,7 @@ module spart_tb;
     integer i;
 
     // press button[0] to generate a low active reset signal
-    wire rst = ~KEY[0];
+    wire rst = KEY[0];
 
     // Assign switches for baud rate configuration
     assign br_cfg = SW[9:8];
@@ -56,34 +56,18 @@ module spart_tb;
     // Testbench Procedure
     initial begin
         CLOCK_50 = 0;
-        // Apply Reset
-        @(negedge CLOCK_50) KEY[0] = 0;
-        @(negedge CLOCK_50) KEY[0] = 1;
-
         KEY = 4'b1111; // Default no reset
         SW = 10'b0000000000;
         rxd = 1;
 
-
-	rxd = 0;
-	SW[9:8] = 2'b00;       
-        // Send a byte to SPART one bit at a time
-        input_byte = 8'b10100110;
-        for (i = 0; i < 8; i = i + 1) begin
-            #10 rxd = input_byte[i];
-        end
-        #10 rxd = 1; // Stop bit
-        
-        // Wait for received data to be available
-        wait(rda);
-
-        // Wait for transmit buffer to be ready
-        wait(tbr);
+        // Apply Reset
+        @(negedge CLOCK_50) KEY[0] = 0;
+        @(negedge CLOCK_50) KEY[0] = 1;
 
         rxd = 0;
-        SW[9:8] = 2'b01;       
+        SW[9:8] = 2'b00;       
             // Send a byte to SPART one bit at a time
-            input_byte = 8'b01011001;
+            input_byte = 8'b10100110;
             for (i = 0; i < 8; i = i + 1) begin
                 #10 rxd = input_byte[i];
             end
@@ -95,39 +79,54 @@ module spart_tb;
             // Wait for transmit buffer to be ready
             wait(tbr);
 
-        rxd = 0;
-        SW[9:8] = 2'b10;       
-            // Send a byte to SPART one bit at a time
-            input_byte = 8'b01011001;
-            for (i = 0; i < 8; i = i + 1) begin
-                #10 rxd = input_byte[i];
+            rxd = 0;
+            SW[9:8] = 2'b01;       
+                // Send a byte to SPART one bit at a time
+                input_byte = 8'b01011001;
+                for (i = 0; i < 8; i = i + 1) begin
+                    #10 rxd = input_byte[i];
+                end
+                #10 rxd = 1; // Stop bit
+                
+                // Wait for received data to be available
+                wait(rda);
+
+                // Wait for transmit buffer to be ready
+                wait(tbr);
+
+            rxd = 0;
+            SW[9:8] = 2'b10;       
+                // Send a byte to SPART one bit at a time
+                input_byte = 8'b01011001;
+                for (i = 0; i < 8; i = i + 1) begin
+                    #10 rxd = input_byte[i];
+                end
+                #10 rxd = 1; // Stop bit
+                
+                // Wait for received data to be available
+                wait(rda);
+
+                // Wait for transmit buffer to be ready
+                wait(tbr);
+
+            rxd = 0;
+            SW[9:8] = 2'b10;       
+                // Send a byte to SPART one bit at a time
+                input_byte = 8'b01011001;
+                for (i = 0; i < 8; i = i + 1) begin
+                    #10 rxd = input_byte[i];
+                end
+                #10 rxd = 1; // Stop bit
+                
+                // Wait for received data to be available
+                wait(rda);
+
+                // Wait for transmit buffer to be ready
+                wait(tbr);
+                
+                // End simulation
+                #50 $finish;
             end
-            #10 rxd = 1; // Stop bit
-            
-            // Wait for received data to be available
-            wait(rda);
-
-            // Wait for transmit buffer to be ready
-            wait(tbr);
-
-        rxd = 0;
-        SW[9:8] = 2'b10;       
-            // Send a byte to SPART one bit at a time
-            input_byte = 8'b01011001;
-            for (i = 0; i < 8; i = i + 1) begin
-                #10 rxd = input_byte[i];
-            end
-            #10 rxd = 1; // Stop bit
-            
-            // Wait for received data to be available
-            wait(rda);
-
-            // Wait for transmit buffer to be ready
-            wait(tbr);
-            
-            // End simulation
-            #50 $finish;
-        end
 
     // Monitor signals
     initial begin
