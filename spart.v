@@ -40,6 +40,7 @@ reg rda_ff;
 reg tbr_ff;
 reg txd_ff;
 reg [3:0] bit_counter;
+reg [3:0] bit_counter_t;
 reg receiving, transmitting;
 
 //division buffer
@@ -50,9 +51,9 @@ always @(posedge clk or negedge rst) begin
 	db <= 16'b0;
     end
     else begin
-	if (ioaddr == 2'b10 && !iorw && iocs) begin
+	if (ioaddr == 2'b10 && !iorw) begin
 		db[7:0] = databus;
-	end else if (ioaddr == 2'b11 && !iorw && iocs)begin
+	end else if (ioaddr == 2'b11 && !iorw)begin
 		db[15:8] = databus;
 	end
     end
@@ -66,7 +67,7 @@ always @(posedge clk or negedge rst) begin
     if (!rst) begin
         baud_counter <= 0;
     end else begin
-        if (baud_counter == db || (ioaddr == 2'b0 && !iorw && iocs)) begin
+        if (baud_counter == db || (ioaddr == 2'b00 && !iorw && iocs)) begin
             baud_counter <= 0;
         end else begin
             baud_counter <= baud_counter + 1;
@@ -100,22 +101,22 @@ end
 // Transmit Logic with Start and Stop Bit Handling
 always @(posedge clk or negedge rst) begin
     if (!rst) begin
-        tbr_ff <= 1;
+        tbr_ff <= 0;
         txd_ff <= 1;
-        bit_counter <= 0;
+        bit_counter_t <= 4'h0;
         transmitting <= 0;
     end else if (!transmitting && !iorw && ioaddr == 2'b00 && iocs) begin
         t_buffer <= databus;
         tbr_ff <= 0;
         transmitting <= 1;
-        bit_counter <= 0;
+        bit_counter_t <= 4'h0;
         txd_ff <= 0; // Start bit
     end else if (transmitting && baud_counter == 0) begin
-        if (bit_counter < 8) begin
+        if (bit_counter_t < 8) begin
             txd_ff <= t_buffer[0];
             t_buffer <= {1'b1, t_buffer[7:1]};
-            bit_counter <= bit_counter + 1;
-        end else if (bit_counter == 8) begin // Stop bit
+            bit_counter_t <= bit_counter_t + 1;
+        end else if (bit_counter_t == 8) begin // Stop bit
             txd_ff <= 1;
             tbr_ff <= 1;
             transmitting <= 0;
