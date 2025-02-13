@@ -125,7 +125,7 @@ module spart_tb;
                 wait(tbr);
                 
                 // End simulation
-                #50 $finish;
+                #50 $stop();
             end
 
     // Monitor signals

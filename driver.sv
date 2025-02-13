@@ -103,30 +103,33 @@ module driver(
                     next_state = TRANSMITTING;
             end
             PROGRAMMING: begin
-                iocs = 1;
-                // Send programming bytes sequentially:
-                if (baud_byte_cnt == 0) begin
-                    // Send the low byte into the Divisor Buffer (DB Low).
-                    databus_reg = (br_cfg == 2'b00) ? 8'h8A :
-                                (br_cfg == 2'b01) ? 8'h45 :
-                                (br_cfg == 2'b10) ? 8'hA2 :
-                                (br_cfg == 2'b11) ? 8'h50 : 8'hZZ;
-                    ioaddr      = 2'b10; // Address for DB Low
-                    next_byte   = 1;
-                end
-                else if (baud_byte_cnt == 1) begin
-                    // Send the high byte into the Divisor Buffer (DB High).
-                    databus_reg = (br_cfg == 2'b00) ? 8'h02 :
-                                (br_cfg == 2'b01) ? 8'h01 :
-                                (br_cfg == 2'b10) ? 8'h00 :
-                                (br_cfg == 2'b11) ? 8'h00 : 8'hZZ;
-                    ioaddr      = 2'b11; // Address for DB High
-                    next_byte   = 1;
-                end
-                else begin
-                    // After both bytes are sent, return to the IDLE state.
-                    next_state = IDLE;
+                if (br_cfg_ff !== br_cfg) 
                     new_br_cfg = 1;
+                else begin
+                    // Send programming bytes sequentially:
+                    if (baud_byte_cnt == 0) begin
+                        // Send the low byte into the Divisor Buffer (DB Low).
+                        databus_reg = (br_cfg == 2'b00) ? 8'h8A :
+                                    (br_cfg == 2'b01) ? 8'h45 :
+                                    (br_cfg == 2'b10) ? 8'hA2 :
+                                    (br_cfg == 2'b11) ? 8'h50 : 8'hZZ;
+                        ioaddr      = 2'b10; // Address for DB Low
+                        next_byte   = 1;
+                    end
+                    else if (baud_byte_cnt == 1) begin
+                        // Send the high byte into the Divisor Buffer (DB High).
+                        databus_reg = (br_cfg == 2'b00) ? 8'h02 :
+                                    (br_cfg == 2'b01) ? 8'h01 :
+                                    (br_cfg == 2'b10) ? 8'h00 :
+                                    (br_cfg == 2'b11) ? 8'h00 : 8'hZZ;
+                        ioaddr      = 2'b11; // Address for DB High
+                        next_byte   = 1;
+                    end
+                    else begin
+                        // After both bytes are sent, return to the IDLE state.
+                        next_state = IDLE;
+                        new_br_cfg = 1;
+                    end
                 end
             end
             RECEIVING: begin
