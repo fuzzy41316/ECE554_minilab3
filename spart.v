@@ -74,6 +74,7 @@ always @(posedge clk or negedge rst) begin
 	    bit_count <=1;
         end else begin
             baud_counter <= baud_counter + 1;
+	    bit_count<=0;
         end
     end
 end
