@@ -132,6 +132,7 @@ module driver(
             RECEIVING: begin
                 // Read operation: set up for receiving data from SPART.
                 ioaddr = 2'b00; // Assume this is the address for the receive register.
+                // ioaddr = 2'b01; // This is the address for the status register.
                 iocs   = 1;
                 iorw   = 1;    // Read operation (SPART -> driver)
                 if (!rda)
@@ -139,7 +140,7 @@ module driver(
             end
             TRANSMITTING: begin
                 // Write operation: set up for transmitting data to SPART.
-                ioaddr = 2'b01; // Assume this is the address for the transmit buffer.
+                ioaddr = 2'b01; // This is the address for the transmit buffer.
                 iocs   = 1;
                 iorw   = 0;    // Write operation (driver -> SPART)
                 if (!tbr)
