@@ -89,11 +89,11 @@ always @(posedge clk or negedge rst) begin
     end else if (!receiving && rxd == 0) begin // Detect start bit
         receiving <= 1;
         bit_counter <= 0;
-    end else if (receiving && baud_counter == 0) begin
+    end else if (receiving) begin
         if (bit_count) begin
             r_buffer <= {rxd, r_buffer[7:1]};
             bit_counter <= bit_counter + 1;
-        end else if (bit_counter == 8) begin // Stop bit
+        end else if (bit_counter > 8) begin // Stop bit
             if (rxd == 1) begin
                 rda_ff <= 1;
             end
@@ -116,12 +116,12 @@ always @(posedge clk or negedge rst) begin
         transmitting <= 1;
         bit_counter_t <= 4'h0;
         txd_ff <= 0; // Start bit
-    end else if (transmitting && baud_counter == 0) begin
+    end else if (transmitting) begin
         if (bit_count) begin
             txd_ff <= t_buffer[0];
             t_buffer <= {1'b1, t_buffer[7:1]};
             bit_counter_t <= bit_counter_t + 1;
-        end else if (bit_counter_t == 8) begin // Stop bit
+        end else if (bit_counter_t > 8) begin // Stop bit
             txd_ff <= 1;
             tbr_ff <= 1;
 	    bit_counter <= 0;

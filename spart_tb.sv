@@ -64,14 +64,14 @@ module spart_tb;
         @(negedge CLOCK_50) KEY[0] = 0;
         @(negedge CLOCK_50) KEY[0] = 1;
 
-        rxd = 0;
+        @(negedge CLOCK_50) rxd = 0;
         SW[9:8] = 2'b00;       
             // Send a byte to SPART one bit at a time
             input_byte = 8'b10100110;
             for (i = 0; i < 8; i = i + 1) begin
-                #10 rxd = input_byte[i];
+                @(negedge CLOCK_50) rxd = input_byte[i];
             end
-            #10 rxd = 1; // Stop bit
+            @(negedge CLOCK_50) rxd = 1; // Stop bit
             
             // Wait for received data to be available
             wait(rda);
