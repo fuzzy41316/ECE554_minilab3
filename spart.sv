@@ -38,6 +38,10 @@ module spart(
     logic [8:0] transmit_shift_reg, receive_shift_reg;
     logic [3:0] bit_counter;
 
+    typedef enum logic [1:0] {IDLE, RECEIVING, TRANSMITTING} state_t;
+    state_t state, next_state;
+
+
     // Division buffer for baud rate generator
     always_ff @(posedge clk, negedge rst) begin
         if (!rst)
@@ -94,14 +98,16 @@ module spart(
                     receive_shift_reg <= {RX1, receive_shift_reg[8:1]};
                 receive_buffer <= receive_shift_reg[7:0];
             end
-            else if (transmitting) begin
-                if (start)
-                    transmit_shift_reg <= {databus, 1'b0};
-                else if (shift)
+
+            else if (start)
+                transmit_shift_reg <= {databus, 1'b0};
+
+            else if (transmitting) begin 
+                if (shift)
                     transmit_shift_reg <= {1'b1, transmit_shift_reg[8:1]};
                 txd <= transmit_shift_reg[0];
             end
-        end
+        end     
     end
 
     // Bit Counter
@@ -116,16 +122,17 @@ module spart(
 
     // Flop RDA and TBR signals
     always_ff @(posedge clk, negedge rst) begin
-        if (!rst) 
+        if (!rst) begin
             rda <= 1'b0;
-        else 
+            tbr <= 1'b0;
+        end
+        else  begin
             rda <= ready;
+            tbr <= (iocs & ioaddr == 2'b00 & !iorw & (next_state != RECEIVING)) ? 1'b1 : 1'b0;
+        end
     end
 
     // State machine
-    typedef enum logic [1:0] {IDLE, RECEIVING, TRANSMITTING} state_t;
-    state_t state, next_state;
-
     always_ff@(posedge clk, negedge rst) begin
         if (!rst)
             state <= IDLE;
@@ -139,11 +146,9 @@ module spart(
         start = 0;
         receiving = 0;
         transmitting = 0;
-        tbr = 1;
 
         case(state)
             RECEIVING: begin
-                tbr = 0;
                 receiving = 1;
                 if (bit_counter == 10) begin
                     // Check for stop bit
@@ -159,7 +164,6 @@ module spart(
                 end
             end
             TRANSMITTING: begin
-                tbr = 0;
                 transmitting = 1;
                 if (bit_counter == 10) 
                     next_state = IDLE;

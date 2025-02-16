@@ -46,7 +46,7 @@ module driver(
     logic new_br_cfg;
 
 
-    typedef enum reg[1:0] {IDLE, PROGRAMMING, RECEIVING, TRANSMITTING} state_t;
+    typedef enum reg[1:0] {IDLE, PROGRAMMING, READING, WRITING} state_t;
     state_t state, next_state;
 
     always_ff@(posedge clk, negedge rst) begin
@@ -83,12 +83,13 @@ module driver(
         next_state = state;
         iocs = 0;
         iorw = 0;
-        ioaddr = '0;
+        ioaddr = 2'b00;      
         next_byte = 0;
         new_br_cfg = 0;
 
         case(state)
             IDLE: begin
+                iocs = 1;
                 // On reset, program the baud counter
                 if (!rst) begin
                     next_state = PROGRAMMING;
@@ -100,11 +101,11 @@ module driver(
                 else if (rda) begin
                     iocs = 1;
                     iorw = 1;
-                    next_state = RECEIVING;
+                    next_state = READING;
                 end
                 else if (tbr) begin
                     iocs = 1;
-                    next_state = TRANSMITTING;
+                    next_state = WRITING;
                 end
             end
             PROGRAMMING: begin
@@ -133,18 +134,19 @@ module driver(
                     end
                 end
             end
-            RECEIVING: begin
+            READING: begin
                 // Read operation: set up for receiving data from SPART.
                 ioaddr = 2'b00; // Assume this is the address for the receive register.
                 // ioaddr = 2'b01; // This is the address for the status register.
                 iocs   = 1;
                 iorw   = 1;    // Read operation (SPART -> driver)
+                databus_reg = databus;
                 if (!rda)
                     next_state = IDLE;
             end
-            TRANSMITTING: begin
+            WRITING: begin
                 // Write operation: set up for transmitting data to SPART.
-                ioaddr = 2'b01; // This is the address for the transmit buffer.
+                ioaddr = 2'b00; // This is the address for the transmit buffer.
                 iocs   = 1;
                 iorw   = 0;    // Write operation (driver -> SPART)
                 if (!tbr)
