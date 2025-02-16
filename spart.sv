@@ -33,7 +33,7 @@ module spart(
     // Internal signals
     logic [15:0] division_buffer;
     logic [15:0] baud_counter;
-    logic shift, start, ready, receiving, transmitting;
+    logic shift, start, init, ready, receiving, transmitting;
     logic [7:0] receive_buffer, status_register;
     logic [8:0] transmit_shift_reg, receive_shift_reg;
     logic [3:0] bit_counter;
@@ -55,32 +55,38 @@ module spart(
     end
 
     // Baud rate generator
-    always_ff @(posedge clk, negedge rst) begin
-        if (!rst) 
-            baud_counter <= '0;
+    always_ff @(posedge clk) begin
         // Reset baud_counter when shifting another bit in or starting receiving/transmitting
-        else if (start | shift) 
-            baud_counter <= '0;
+        if (init)
+            baud_counter <= division_buffer;
+        else if (start) 
+            baud_counter <= division_buffer / 2;
+        else if (shift)
+            baud_counter <= division_buffer;
         // Start baud_counter when receiving or transmitting
         else if (receiving | transmitting) 
-            baud_counter <= baud_counter + 1;
+            baud_counter <= baud_counter - 1;
     end
 
     // Control signals and DATABUS behavior
-    assign shift =              (baud_counter == division_buffer) ? 1 : 0;
+    assign shift =              (baud_counter == 0) ? 1 : 0;
     assign status_register =    {6'b0, tbr, rda};
     assign databus =            (ioaddr == 2'b01 & iorw) ? status_register :
                                 (ioaddr == 2'b00 & iorw & iocs) ? receive_buffer :
                                 'Z;
 
     // Receive shift register
-    logic RX1;
+    logic RX1, RX2;
     always_ff@(posedge clk, negedge rst) begin
         // Rx line is high when idle, pulled low to initialize receiving
-        if(!rst) 
+        if(!rst) begin
             RX1 <= 1'b1;
-        else 
+            RX2 <= RX1;
+        end
+        else begin
             RX1 <= rxd;
+            RX2 <= RX1;
+        end
     end
 
     // Receive shift register
@@ -95,7 +101,7 @@ module spart(
             // When shift is high, shift in the data from the RX line to the receive shift register
             if (receiving) begin
                 if (shift)
-                    receive_shift_reg <= {RX1, receive_shift_reg[8:1]};
+                    receive_shift_reg <= {RX2, receive_shift_reg[8:1]};
                 receive_buffer <= receive_shift_reg[7:0];
             end
 
@@ -144,6 +150,7 @@ module spart(
         ready = 0;        // Receive data available
         next_state = state;
         start = 0;
+        init = 0;
         receiving = 0;
         transmitting = 0;
 
@@ -152,7 +159,7 @@ module spart(
                 receiving = 1;
                 if (bit_counter == 10) begin
                     // Check for stop bit
-                    if (RX1 == 1) begin
+                    if (RX2 == 1) begin
                         ready = 1;
                         next_state = IDLE;
                     end
@@ -171,12 +178,13 @@ module spart(
             // default is IDLE state
             default: begin
                 // Data line pulled down to start receiving
-                if ((RX1 == 0) & iocs) begin
+                if ((RX2 == 0) & iocs) begin
                     start = 1;
                     next_state = RECEIVING;
                 end
                 // Driver gave data to transmit buffer
                 else if (tbr & iocs) begin
+                    init = 1;
                     start = 1;
                     next_state = TRANSMITTING;
                 end
