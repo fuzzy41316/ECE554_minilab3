@@ -106,8 +106,8 @@ module tb;
 
         // Start transmitting to other buffer
         @(posedge rda) begin // Wait for received data to be available
-            $display("Data received by SPART: %b", spart1.receive_buffer);
-            $display("Data expected by SPART: %b", data);
+            $display("Data received by SPART1: %b", spart1.receive_buffer);
+            $display("Data expected by SPART1: %b", data);
             if (spart1.receive_buffer == data) begin
                 $display("Data received successfully!");
             end 
@@ -134,10 +134,9 @@ module tb;
         // Now transmit H to the other SPART
         iocs_0 = 1;                         // enable SPART0
 
-
         @(posedge spart0.rda) begin
             $display("Data received by SPART0: %b", spart0.receive_buffer);
-            $display("Data expected by SPART: %b", data);
+            $display("Data expected by SPART0: %b", data);
             if (spart0.receive_buffer == data) begin
                 $display("Data received successfully!");
             end 
@@ -145,8 +144,25 @@ module tb;
                 $display("Data mismatch! at time %t", $time);
                 repeat(3)@(posedge CLOCK_50);
                 $stop();
-            end
+            end  
         end
+
+        // Switch spart0 to enable receiving
+        iocs_0 = 1;
+        iorw_0 = 1;
+        ioaddr_0 = 2'b00;
+        repeat(4)@(posedge CLOCK_50);
+        $display("Data received by printf: %b", databus_0);
+        $display("Data expected by printf: %b", data);
+        if (databus_0 === data) begin
+            $display("Data received successfully!");
+        end
+        else begin
+            $display("Data mismatch! at time %t", $time);
+            repeat(3)@(posedge CLOCK_50);
+            $stop();
+        end  
+
         $stop();
     end
 

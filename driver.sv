@@ -149,6 +149,7 @@ module driver(
                 ioaddr = 2'b00; // This is the address for the transmit buffer.
                 iocs   = 1;
                 iorw   = 0;    // Write operation (driver -> SPART)
+
                 if (!tbr)
                     next_state = IDLE;
             end
