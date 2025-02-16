@@ -97,13 +97,17 @@ module driver(
                     new_br_cfg = 1;
                     next_state = PROGRAMMING;
                 end
-                else if (rda)
+                else if (rda) begin
+                    iocs = 1;
+                    iorw = 1;
                     next_state = RECEIVING;
-                else if (tbr)
+                end
+                else if (tbr) begin
+                    iocs = 1;
                     next_state = TRANSMITTING;
+                end
             end
             PROGRAMMING: begin
-                iocs = 1;
                 if (br_cfg_ff !== br_cfg) 
                     new_br_cfg = 1;
                 else begin

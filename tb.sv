@@ -68,7 +68,7 @@ module tb;
         $display("Sending data to SPART...");
         input_byte = 8'hA6; // Data byte to be sent
         for (i = 0; i < 8; i = i + 1) begin
-            @(posedge (spart0.bit_counter == i+1)) 
+            @(posedge (spart0.shift)) 
                 rxd = input_byte[i]; // Data bits
             $display("Sending bit %d: %b", i, input_byte[i]);    
         end
@@ -77,19 +77,33 @@ module tb;
             rxd = 1; // Stop bit
         $display("Sending stop bit");
 
-        wait(rda); // Wait for received data to be available
-        $display("Data received by SPART: %b", spart0.r_buffer);
-        $display("Data expected by SPART: %b", input_byte);
-        if (spart0.r_buffer == input_byte) begin
-            $display("Data received successfully!");
-        end 
-        else begin
-            $display("Data mismatch! at time %t", $time);
-            $stop();
+        @(posedge rda) begin // Wait for received data to be available
+            $display("Data received by SPART: %b", spart0.receive_buffer);
+            $display("Data expected by SPART: %b", input_byte);
+            if (spart0.receive_buffer == input_byte) begin
+                $display("Data received successfully!");
+            end 
+            else begin
+                $display("Data mismatch! at time %t", $time);
+                $stop();
+            end
         end
 
-        $display("Sending data from driver to SPART...");
+        $display("Sending data from SPART to driver...");
+        @(posedge driver0.state == 2) begin
+            if (driver0.databus !== input_byte) begin
+                $display("Data received by driver: %b", driver0.databus);
+                $display("Data expected by driver: %b", input_byte);
+                $display("Data mismatch! at time %t", $time);
+                repeat (2)@(posedge CLOCK_50);
+                $stop();
+            end
+            else    
+                $display("Data received successfully!");
+        end
 
+
+        
 
         $stop();
     end
