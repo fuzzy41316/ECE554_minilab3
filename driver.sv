@@ -17,6 +17,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
+`default_nettype wire
 module driver(
     input clk,
     input rst,
@@ -42,7 +43,7 @@ module driver(
     /* Internal Wires */
     logic next_byte;
     reg baud_byte_cnt;
-    reg br_cfg_ff;
+    reg [1:0] br_cfg_ff;
     logic new_br_cfg;
 
 
@@ -67,11 +68,8 @@ module driver(
     end
 
     // Controller to check for new baud rate configuration
-    always_ff@(posedge clk, negedge rst) begin
-        if (!rst)
-            br_cfg_ff <= br_cfg;
-        else
-            br_cfg_ff <= br_cfg;
+    always_ff@(posedge clk) begin
+        br_cfg_ff <= br_cfg;
     end
 
     // Controller for Databus
@@ -83,9 +81,10 @@ module driver(
         next_state = state;
         iocs = 0;
         iorw = 0;
-        ioaddr = 2'b00;      
+        ioaddr = '0;;      
         next_byte = 0;
         new_br_cfg = 0;
+        databus_reg = 'Z;
 
         case(state)
             IDLE: begin
@@ -102,10 +101,6 @@ module driver(
                     iocs = 1;
                     iorw = 1;
                     next_state = READING;
-                end
-                else if (tbr) begin
-                    iocs = 1;
-                    next_state = WRITING;
                 end
             end
             PROGRAMMING: begin
@@ -142,8 +137,9 @@ module driver(
                 iorw   = 1;    // Read operation (SPART -> driver)
                 databus_reg = databus;
 
-                if (!rda)
-                    next_state = IDLE;
+                // Write after receiving
+                if (tbr & !rda)
+                    next_state = WRITING;
             end
             WRITING: begin
                 // Write operation: set up for transmitting data to SPART.

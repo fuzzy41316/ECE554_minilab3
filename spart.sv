@@ -17,6 +17,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
+`default_nettype wire
 module spart(
     input clk,      
     input rst,              // Active low reset
@@ -41,7 +42,6 @@ module spart(
     typedef enum logic [1:0] {IDLE, RECEIVING, TRANSMITTING} state_t;
     state_t state, next_state;
 
-
     // Division buffer for baud rate generator
     always_ff @(posedge clk, negedge rst) begin
         if (!rst)
@@ -55,9 +55,11 @@ module spart(
     end
 
     // Baud rate generator
-    always_ff @(posedge clk) begin
+    always_ff @(posedge clk, negedge rst) begin
         // Reset baud_counter when shifting another bit in or starting receiving/transmitting
-        if (init)
+        if (!rst)
+            baud_counter <= 16'h0145;
+        else if (init)
             baud_counter <= division_buffer;
         else if (start) 
             baud_counter <= division_buffer / 2;
@@ -71,7 +73,7 @@ module spart(
     // Control signals and DATABUS behavior
     assign shift =              (baud_counter == 0) ? 1 : 0;
     assign status_register =    {6'b0, tbr, rda};
-    assign databus =            (ioaddr == 2'b01 & iorw) ? status_register :
+    assign databus =            (ioaddr == 2'b01 & iorw & iocs) ? status_register :
                                 (ioaddr == 2'b00 & iorw & iocs) ? receive_buffer :
                                 'Z;
 
@@ -81,7 +83,7 @@ module spart(
         // Rx line is high when idle, pulled low to initialize receiving
         if(!rst) begin
             RX1 <= 1'b1;
-            RX2 <= RX1;
+            RX2 <= 1'b1;
         end
         else begin
             RX1 <= rxd;
@@ -104,10 +106,8 @@ module spart(
                     receive_shift_reg <= {RX2, receive_shift_reg[8:1]};
                 receive_buffer <= receive_shift_reg[7:0];
             end
-
             else if (start)
                 transmit_shift_reg <= {databus, 1'b0};
-
             else if (transmitting) begin 
                 if (shift)
                     transmit_shift_reg <= {1'b1, transmit_shift_reg[8:1]};
@@ -134,7 +134,7 @@ module spart(
         end
         else  begin
             rda <= ready;
-            tbr <= (iocs & ioaddr == 2'b00 & !iorw & (next_state != RECEIVING) & (state != TRANSMITTING)) ? 1'b1 : 1'b0;
+            tbr <= rda;
         end
     end
 
