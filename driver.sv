@@ -31,10 +31,10 @@ module driver(
     );
 
     /* br_cfg
-    00  4800 bits/sec   => 650  x028a
-    01  9600 bits/sec   => 325  x0145
-    10  19200 bits/sec  => 162  x00A2
-    11  38400 bits/sec  => 80   x0050
+    00  4800 bits/sec   => 10417    x27A3
+    01  9600 bits/sec   => 5208     x1458
+    10  19200 bits/sec  => 162      x0A2C
+    11  38400 bits/sec  => 80       x0516
     */
 
     // RDA: Uart is ready to transmit to driver
@@ -52,7 +52,7 @@ module driver(
 
     always_ff@(posedge clk, negedge rst) begin
         if (!rst) 
-            state <= PROGRAMMING;   // On reset, program the baud counter
+            state <= PROGRAMMING;  
         else
             state <= next_state;
     end
@@ -81,7 +81,7 @@ module driver(
         next_state = state;
         iocs = 0;
         iorw = 0;
-        ioaddr = '0;;      
+        ioaddr = '0;      
         next_byte = 0;
         new_br_cfg = 0;
         databus_reg = 'Z;
@@ -89,11 +89,7 @@ module driver(
         case(state)
             IDLE: begin
                 iocs = 1;
-                // On reset, program the baud counter
-                if (!rst) begin
-                    next_state = PROGRAMMING;
-                end
-                else if (br_cfg_ff !== br_cfg) begin 
+                if (br_cfg_ff !== br_cfg) begin 
                     new_br_cfg = 1;
                     next_state = PROGRAMMING;
                 end
@@ -104,29 +100,26 @@ module driver(
                 end
             end
             PROGRAMMING: begin
-                if (br_cfg_ff !== br_cfg) 
+                iocs = 1;
+                // Send programming bytes sequentially:
+                if (baud_byte_cnt == 0) begin
+                    // Send the low byte into the Divisor Buffer (DB Low).
+                    databus_reg = (br_cfg == 2'b00) ? 8'hA3 :
+                                (br_cfg == 2'b01) ? 8'h58 :
+                                (br_cfg == 2'b10) ? 8'h2C :
+                                (br_cfg == 2'b11) ? 8'h16 : 8'hZZ;
+                    ioaddr      = 2'b10; // Address for DB Low
+                    next_byte   = 1;
+                end
+                else if (baud_byte_cnt == 1) begin
+                    // Send the high byte into the Divisor Buffer (DB High).
+                    databus_reg = (br_cfg == 2'b00) ? 8'h27 :
+                                (br_cfg == 2'b01) ? 8'h14 :
+                                (br_cfg == 2'b10) ? 8'h0A :
+                                (br_cfg == 2'b11) ? 8'h05 : 8'hZZ;
+                    ioaddr      = 2'b11; // Address for DB High
+                    next_state = IDLE;
                     new_br_cfg = 1;
-                else begin
-                    // Send programming bytes sequentially:
-                    if (baud_byte_cnt == 0) begin
-                        // Send the low byte into the Divisor Buffer (DB Low).
-                        databus_reg = (br_cfg == 2'b00) ? 8'h8A :
-                                    (br_cfg == 2'b01) ? 8'h45 :
-                                    (br_cfg == 2'b10) ? 8'hA2 :
-                                    (br_cfg == 2'b11) ? 8'h50 : 8'hZZ;
-                        ioaddr      = 2'b10; // Address for DB Low
-                        next_byte   = 1;
-                    end
-                    else if (baud_byte_cnt == 1) begin
-                        // Send the high byte into the Divisor Buffer (DB High).
-                        databus_reg = (br_cfg == 2'b00) ? 8'h02 :
-                                    (br_cfg == 2'b01) ? 8'h01 :
-                                    (br_cfg == 2'b10) ? 8'h00 :
-                                    (br_cfg == 2'b11) ? 8'h00 : 8'hZZ;
-                        ioaddr      = 2'b11; // Address for DB High
-                        next_state = IDLE;
-                        new_br_cfg = 1;
-                    end
                 end
             end
             READING: begin

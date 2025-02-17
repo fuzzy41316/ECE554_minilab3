@@ -1,0 +1,2 @@
+Info (10281): Verilog HDL Declaration information at spart.sv(37): object "receiving" differs only in case from object "RECEIVING" in the same scope File: I:/ece554/ECE554_minilab3/spart.sv Line: 37
+Info (10281): Verilog HDL Declaration information at spart.sv(37): object "transmitting" differs only in case from object "TRANSMITTING" in the same scope File: I:/ece554/ECE554_minilab3/spart.sv Line: 37

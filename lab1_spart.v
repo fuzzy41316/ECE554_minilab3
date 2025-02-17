@@ -43,12 +43,12 @@ wire [7:0] databus;
 wire [1:0] br_cfg;
 
 // press button[0] to generate a low active reset signal
-wire rst = ~KEY[0];
+wire rst = KEY[0];
 
 // LED[9] : indicator for RX signal
 // LED[8] : indicator for TX signal
 // LED[0] : indicator for rst signal 
-assign LEDR = {~rxd,~txd,7'b0,rst};
+assign LEDR = {~rxd,~txd,7'b0,~rst};
 
 // GPIO[3] as TX output, GPIO[5] as RX input
 assign GPIO[3] = txd;

@@ -1,0 +1,854 @@
+# Compile of driver.sv was successful.
+# Compile of lab1_spart.v was successful.
+# Compile of spart.sv was successful.
+# Compile of tb.sv was successful.
+# 4 compiles, 0 failed with no errors.
+vsim work.tb -voptargs=+acc
+# vsim work.tb -voptargs="+acc" 
+# Start time: 12:56:44 on Feb 17,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+add wave -position insertpoint sim:/tb/spart0/*
+add wave -position insertpoint sim:/tb/spart1/*
+add wave -position insertpoint sim:/tb/driver/*
+run -all
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Causality operation skipped due to absence of debug database file
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv was successful.
+# Compile of spart.sv was successful.
+# 2 compiles, 0 failed with no errors.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv was successful.
+# Compile of lab1_spart.v was successful.
+# Compile of spart.sv was successful with warnings.
+# Compile of spart.sv was successful with warnings.
+# Compile of tb.sv was successful.
+# 4 compiles, 0 failed with no errors.
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv was successful.
+# Compile of spart.sv was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -voptargs=+acc work.tb
+# End time: 15:05:02 on Feb 17,2025, Elapsed time: 2:08:18
+# Errors: 0, Warnings: 3
+# vsim -voptargs="+acc" work.tb 
+# Start time: 15:05:02 on Feb 17,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+vsim -voptargs=+acc work.tb
+# End time: 15:05:15 on Feb 17,2025, Elapsed time: 0:00:13
+# Errors: 0, Warnings: 2
+# vsim -voptargs="+acc" work.tb 
+# Start time: 15:05:15 on Feb 17,2025
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+add wave -position insertpoint sim:/tb/spart0/*
+add wave -position insertpoint sim:/tb/spart1/*
+add wave -position insertpoint sim:/tb/driver/*
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63655 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv failed with 4 errors.
+# Compile of lab1_spart.v was successful.
+# Compile of spart.sv was successful.
+# Compile of tb.sv was successful.
+# 4 compiles, 1 failed with 4 errors.
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv failed with 1 errors.
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of spart.sv failed with 2 errors.
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 63665 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of lab1_spart.v was successful.
+# Compile of lab1_spart.v was successful.
+# Compile of spart.sv was successful.
+# Compile of spart.sv was successful.
+# Compile of driver.sv was successful.
+# Compile of spart.sv was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of driver.sv was successful.
+# Compile of spart.sv was successful.
+# 2 compiles, 0 failed with no errors.
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Data received by SPART0: 01001000
+# Data expected by SPART0: 01001000
+# Data received successfully!
+# Data received by printf: 01001000
+# Data expected by printf: 01001000
+# Data received successfully!
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(168)
+#    Time: 1015855 ns  Iteration: 2  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 168
+# Compile of spart.sv was successful.
+# Compile of lab1_spart.v was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Compile of driver.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(87): (vopt-7033) Variable 'ioaddr' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(56).
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(88): (vopt-7033) Variable 'next_byte' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(57).
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(114): (vopt-7033) Variable 'ioaddr' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(56).
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(115): (vopt-7033) Variable 'next_byte' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(57).
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(123): (vopt-7033) Variable 'ioaddr' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(56).
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(130): (vopt-7033) Variable 'ioaddr' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(56).
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/driver.sv(142): (vopt-7033) Variable 'ioaddr' driven in a combinational block, may not be driven by any other process. See I:/ece554/ECE554_minilab3/driver.sv(56).
+# Optimization failed
+# ** Error: (vopt-2064) Compiler back-end code generation process terminated with code 12.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=8, Warnings=1.
+# Compile of driver.sv was successful.
+vsim -voptargs=+acc work.tb
+# vsim -voptargs="+acc" work.tb 
+# Start time: 15:05:15 on Feb 17,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=8, Warnings=2.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+add wave -position insertpoint sim:/tb/spart0/*
+add wave -position insertpoint sim:/tb/spart1/*
+add wave -position insertpoint sim:/tb/driver/*
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Compile of spart.sv failed with 2 errors.
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Compile of tb.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+# Compile of tb.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received by driver: 0x00x000
+# Data expected by driver: 01001000
+# Data mismatch! at time            964135000
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(127)
+#    Time: 964155 ns  Iteration: 1  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 127
+# Compile of tb.sv was successful.
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received by driver: 0x00x000
+# Data expected by driver: 01001000
+# Data mismatch! at time            964135000
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(123)
+#    Time: 964155 ns  Iteration: 1  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 123
+# Compile of driver.sv was successful.
+# Compile of lab1_spart.v was successful.
+# Compile of spart.sv was successful.
+# Compile of tb.sv was successful.
+# 4 compiles, 0 failed with no errors.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)

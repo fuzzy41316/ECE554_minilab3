@@ -28,7 +28,7 @@ module spart(
     input [1:0] ioaddr,     // 00 Transmit Buffer, 01 Status Register, 10 DB(Low), 11 DB(High)
     inout [7:0] databus,    // Asynchronous bidirectional data bus between SPART and Driver
     output logic txd,       // Data bit going out
-    input logic rxd         // Data bit coming in
+    input rxd         // Data bit coming in
     );
 
     // Internal signals
@@ -42,27 +42,16 @@ module spart(
     typedef enum logic [1:0] {IDLE, RECEIVING, TRANSMITTING} state_t;
     state_t state, next_state;
 
-    // Division buffer for baud rate generator
-    always_ff @(posedge clk, negedge rst) begin
-        if (!rst)
-            division_buffer <= 16'h0145;            // Default 9600 baud rate
-        else if (iocs) begin                        // Enable for the SPART
-            if (iorw & (ioaddr == 2'b10))           // Low byte from driver 
-                division_buffer[7:0] <= databus;
-            else if (iorw & (ioaddr == 2'b11))      // High byte from driver
-                division_buffer[15:8] <= databus;
-        end
-    end
+    assign division_buffer[7:0]  = (iocs & !iorw & (ioaddr == 2'b10)) ? databus : division_buffer[7:0];
+    assign division_buffer[15:8]  = (iocs & !iorw & (ioaddr == 2'b11)) ? databus : division_buffer[15:8];
 
     // Baud rate generator
-    always_ff @(posedge clk, negedge rst) begin
+    always_ff @(posedge clk) begin
         // Reset baud_counter when shifting another bit in or starting receiving/transmitting
-        if (!rst)
-            baud_counter <= 16'h0145;
-        else if (init)
+        if (init)
             baud_counter <= division_buffer;
         else if (start) 
-            baud_counter <= division_buffer / 2;
+            baud_counter <= division_buffer/2;
         else if (shift)
             baud_counter <= division_buffer;
         // Start baud_counter when receiving or transmitting

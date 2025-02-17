@@ -1,0 +1,17 @@
+Analysis & Synthesis Status : Successful - Mon Feb 17 17:48:00 2025
+Quartus Prime Version : 23.1std.0 Build 991 11/28/2023 SC Lite Edition
+Revision Name : lab1_spart
+Top-level Entity Name : lab1_spart
+Family : Cyclone V
+Logic utilization (in ALMs) : N/A
+Total registers : 670
+Total pins : 106
+Total virtual pins : 0
+Total block memory bits : 5,120
+Total DSP Blocks : 0
+Total HSSI RX PCSs : 0
+Total HSSI PMA RX Deserializers : 0
+Total HSSI TX PCSs : 0
+Total HSSI PMA TX Serializers : 0
+Total PLLs : 0
+Total DLLs : 0

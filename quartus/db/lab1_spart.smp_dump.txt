@@ -1,0 +1,13 @@
+
+State Machine - |lab1_spart|driver:driver0|state
+Name state.WRITING state.READING state.IDLE state.PROGRAMMING 
+state.PROGRAMMING 0 0 0 0 
+state.IDLE 0 0 1 1 
+state.READING 0 1 0 1 
+state.WRITING 1 0 0 1 
+
+State Machine - |lab1_spart|spart:spart0|state
+Name state.IDLE state.TRANSMITTING state.RECEIVING 
+state.IDLE 0 0 0 
+state.RECEIVING 1 0 1 
+state.TRANSMITTING 1 1 0 
