@@ -163,6 +163,8 @@ module tb;
             $stop();
         end  
 
+        @(posedge spart1.state == 0);   // Wait for it to idle?
+
         $stop();
     end
 

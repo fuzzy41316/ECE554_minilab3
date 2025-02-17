@@ -141,6 +141,7 @@ module driver(
                 iocs   = 1;
                 iorw   = 1;    // Read operation (SPART -> driver)
                 databus_reg = databus;
+
                 if (!rda)
                     next_state = IDLE;
             end

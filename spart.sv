@@ -134,7 +134,7 @@ module spart(
         end
         else  begin
             rda <= ready;
-            tbr <= (iocs & ioaddr == 2'b00 & !iorw & (next_state != RECEIVING)) ? 1'b1 : 1'b0;
+            tbr <= (iocs & ioaddr == 2'b00 & !iorw & (next_state != RECEIVING) & (state != TRANSMITTING)) ? 1'b1 : 1'b0;
         end
     end
 
