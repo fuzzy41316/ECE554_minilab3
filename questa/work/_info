@@ -47,6 +47,10 @@ R0
 R1
 R0
 R1
+R0
+R1
+R0
+R1
 !s11f vlog 2023.3 2023.07, Jul 17 2023
 !s112 1.1
 !i10d 8192
@@ -55,10 +59,10 @@ R1
 cModel Technology
 Z2 dI:/ece554/ECE554_minilab3/questa
 T_opt
-!s110 1739836025
-V@_RE88_kn:T0MJE>hn>T^1
+!s110 1739836897
+V?gK?Wgi6013T8azZ;lTiS2
 04 2 4 work tb fast 0
-=19-4cd71793bb03-67b3ca77-34f-12d0
+=1-4cd71793bb03-67b3cde0-28f-974
 R1
 !s12b OEM100
 !s124 OEM10U4 
@@ -66,7 +70,6 @@ o-quiet -auto_acc_if_foreign -work work +acc
 Z3 tCvgOpt 0
 n@_opt
 OL;O;2023.3;77
-R2
 vdriver
 2I:/ece554/ECE554_minilab3/driver.sv
 Z4 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
@@ -118,23 +121,23 @@ R3
 vspart
 2I:/ece554/ECE554_minilab3/spart.sv
 R4
-Z10 !s110 1739836205
+!s110 1739836418
 !i10b 1
 !s100 b[6GBV>Fk;mej9UjN[A:N1
 IWZ]9d^D5PF?T5fZ0g1A532
 S1
 R2
-w1739836011
+w1739836208
 8I:/ece554/ECE554_minilab3/spart.sv
 FI:/ece554/ECE554_minilab3/spart.sv
-!i122 57
+!i122 59
 L0 21 163
 R6
 R7
 r1
 !s85 0
 31
-Z11 !s108 1739836205.000000
+!s108 1739836418.000000
 !s107 I:/ece554/ECE554_minilab3/spart.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|I:/ece554/ECE554_minilab3/spart.sv|
 !i113 0
@@ -143,23 +146,23 @@ R3
 vtb
 2I:/ece554/ECE554_minilab3/tb.sv
 R4
-R10
+!s110 1739836885
 !i10b 1
-!s100 Oo6g5n83aEZBPZL9fO8V71
-I=;9R1W<7jJ4SA39;A:LnJ1
+!s100 N?<^4W0bZ_G9CPm9]9@gJ1
+I255FIOA]LTm3bWJlf?>M82
 S1
 R2
-w1739835937
+w1739836883
 8I:/ece554/ECE554_minilab3/tb.sv
 FI:/ece554/ECE554_minilab3/tb.sv
-!i122 58
-L0 2 163
+!i122 62
+L0 2 185
 R6
 R7
 r1
 !s85 0
 31
-R11
+!s108 1739836885.000000
 !s107 I:/ece554/ECE554_minilab3/tb.sv|
 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|I:/ece554/ECE554_minilab3/tb.sv|
 !i113 0

@@ -25,12 +25,12 @@ module tb;
     spart spart0 (
         .clk(CLOCK_50),
         .rst(rst),
-        .iocs(iocs),
-        .iorw(iorw),
+        .iocs(iocs_0),
+        .iorw(iorw_0),
         .rda(rda_0),
         .tbr(tbr_0),
-        .ioaddr(ioaddr),
-        .databus(databus),
+        .ioaddr(ioaddr_0),
+        .databus(databus_0),
         .txd(rxd_0),
         .rxd(txd)
     );
@@ -79,6 +79,23 @@ module tb;
         // Apply Reset
         @(negedge CLOCK_50) KEY[0] = 0;
         @(negedge CLOCK_50) KEY[0] = 1; 
+
+        // Make SPART0 configure its baud rate as ioaddr = 00, so 4800
+        ioaddr_0 = 2'b10;
+        force databus_0 = 8'hA3;
+        @(negedge CLOCK_50) begin
+            // Send first byte
+            iocs_0 = 1;
+            iorw_0 = 0; 
+        end
+        ioaddr_0 = 2'b11;
+        force databus_0 = 8'h27;
+        @(negedge CLOCK_50) begin
+            iocs_0 = 0;
+            ioaddr_0 = 2'b00;
+            release databus_0;
+        end
+
 
         // Start transmitting data to SPART (act like keyboard)
         @(negedge CLOCK_50) begin 
@@ -143,10 +160,13 @@ module tb;
         end
 
         // Switch spart0 to enable receiving
+        iocs_0 = 1;
+        iorw_0 = 1;
+        ioaddr_0 = 2'b00;
         repeat(4)@(posedge CLOCK_50);
-        $display("Data received by printf: %b", databus);
+        $display("Data received by printf: %b", databus_0);
         $display("Data expected by printf: %b", data);
-        if (databus === data) begin
+        if (databus_0 === data) begin
             $display("Data received successfully!");
         end
         else begin

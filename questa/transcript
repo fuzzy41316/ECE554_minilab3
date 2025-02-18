@@ -852,3 +852,120 @@ restart -f
 # Loading work.spart(fast)
 # Loading work.spart(fast__1)
 # Loading work.driver(fast)
+# Compile of spart.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received by driver: 0x00x000
+# Data expected by driver: 01001000
+# Data mismatch! at time            964135000
+# ** Note: $stop    : I:/ece554/ECE554_minilab3/tb.sv(123)
+#    Time: 964155 ns  Iteration: 1  Instance: /tb
+# Break in Module tb at I:/ece554/ECE554_minilab3/tb.sv line 123
+# Compile of tb.sv failed with 3 errors.
+# Compile of tb.sv was successful.
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Error (suppressible): I:/ece554/ECE554_minilab3/tb.sv(26): (vopt-8885) Illegal inout port connection for 'databus' (8th connection) to reg type. 
+# Optimization failed
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=1.
+# Compile of tb.sv failed with 4 errors.
+# Compile of tb.sv was successful.
+restart -f
+# No Design Loaded!
+vsim -voptargs=+acc work.tb
+# vsim -voptargs="+acc" work.tb 
+# Start time: 15:05:15 on Feb 17,2025
+# ** Note: (vsim-3812) Design is being optimized...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast__1)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "spart(fast)".
+# ** Note: (vopt-143) Recognized 1 FSM in module "driver(fast)".
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=1, Warnings=2.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+# ** Error (suppressible): (vsim-3839) Variable '/tb/ioaddr', driven via a port connection, is multiply driven. See I:/ece554/ECE554_minilab3/tb.sv(52).
+#    Time: 0 ps  Iteration: 0  Instance: /tb File: I:/ece554/ECE554_minilab3/tb.sv Line: 97
+# ** Error (suppressible): (vsim-3839) Variable '/tb/ioaddr', driven via a port connection, is multiply driven. See I:/ece554/ECE554_minilab3/tb.sv(52).
+#    Time: 0 ps  Iteration: 0  Instance: /tb File: I:/ece554/ECE554_minilab3/tb.sv Line: 92
+# ** Error (suppressible): (vsim-3839) Variable '/tb/ioaddr', driven via a port connection, is multiply driven. See I:/ece554/ECE554_minilab3/tb.sv(52).
+#    Time: 0 ps  Iteration: 0  Instance: /tb File: I:/ece554/ECE554_minilab3/tb.sv Line: 88
+# Error loading design
+# End time: 18:01:05 on Feb 17,2025, Elapsed time: 2:55:50
+# Errors: 4, Warnings: 5
+# Compile of tb.sv was successful.
+restart -f
+# No Design Loaded!
+vsim -voptargs=+acc work.tb
+# vsim -voptargs="+acc" work.tb 
+# Start time: 18:01:35 on Feb 17,2025
+# ** Note: (vsim-3813) Design is being optimized due to module recompilation...
+# ** Warning: (vopt-10587) Some optimizations are turned off because the +acc switch is in effect. This will cause your simulation to run slowly. Please use -access/-debug to maintain needed visibility.
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading sv_std.std
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!
+restart -f
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# ** Note: (vsim-8009) Loading existing optimized design _opt
+# ** Note: (vsim-12126) Error and warning message counts have been restored: Errors=0, Warnings=1.
+# Loading work.tb(fast)
+# Loading work.spart(fast)
+# Loading work.spart(fast__1)
+# Loading work.driver(fast)
+run -all
+# Beginning testing with two SPARTs, printf, and one driver
+# Sending bit           1: 0
+# Sending bit           2: 0
+# Sending bit           3: 0
+# Sending bit           4: 1
+# Sending bit           5: 0
+# Sending bit           6: 0
+# Sending bit           7: 1
+# Sending bit           8: 0
+# Data received by SPART1: 01001000
+# Data expected by SPART1: 01001000
+# Data received successfully!
+# Sending data from SPART to driver...
+# Data received successfully!

@@ -1,9 +1,9 @@
-I:/ece554/ECE554_minilab3/tb.sv {1 {vlog -work work -vopt -sv -stats=none I:/ece554/ECE554_minilab3/tb.sv
+I:/ece554/ECE554_minilab3/spart.sv {1 {vlog -work work -vopt -sv -stats=none I:/ece554/ECE554_minilab3/spart.sv
 Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
--- Compiling module tb
+-- Compiling module spart
 
 Top level modules:
-	tb
+	spart
 
 } {} {}} I:/ece554/ECE554_minilab3/lab1_spart.v {1 {vlog -work work -vopt -stats=none I:/ece554/ECE554_minilab3/lab1_spart.v
 Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
@@ -11,12 +11,5 @@ Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
 
 Top level modules:
 	lab1_spart
-
-} {} {}} I:/ece554/ECE554_minilab3/driver.sv {1 {vlog -work work -vopt -sv -stats=none I:/ece554/ECE554_minilab3/driver.sv
-Questa Intel Starter FPGA Edition-64 vlog 2023.3 Compiler 2023.07 Jul 17 2023
--- Compiling module driver
-
-Top level modules:
-	driver
 
 } {} {}}
