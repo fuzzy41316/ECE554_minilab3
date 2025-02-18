@@ -96,6 +96,8 @@ module tb;
             release databus_0;
         end
 
+        force spart0.division_buffer = 16'h27A3;
+
 
         // Start transmitting data to SPART (act like keyboard)
         @(negedge CLOCK_50) begin 
@@ -160,20 +162,25 @@ module tb;
         end
 
         // Switch spart0 to enable receiving
-        iocs_0 = 1;
-        iorw_0 = 1;
-        ioaddr_0 = 2'b00;
-        repeat(4)@(posedge CLOCK_50);
-        $display("Data received by printf: %b", databus_0);
-        $display("Data expected by printf: %b", data);
-        if (databus_0 === data) begin
-            $display("Data received successfully!");
+        @(negedge CLOCK_50) begin
+            iocs_0 = 1;
+            iorw_0 = 1;
+            ioaddr_0 = 2'b00;
         end
-        else begin
-            $display("Data mismatch! at time %t", $time);
-            repeat(3)@(posedge CLOCK_50);
-            $stop();
-        end  
+        @(posedge CLOCK_50) begin
+            $display("Data received by printf: %b", databus_0);
+            $display("Data expected by printf: %b", data);
+            if (databus_0 === data) begin
+                $display("Data received successfully!");
+            end
+            else begin
+                $display("Data mismatch! at time %t", $time);
+                repeat(3)@(posedge CLOCK_50);
+                $stop();
+            end  
+        end
+        @(negedge CLOCK_50)
+            iocs_0 = 0;
 
         @(posedge spart1.state == 0);   // Wait for it to idle?
 
